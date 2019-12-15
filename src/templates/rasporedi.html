@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>RAF raspored</title>
+    <style>
+     #levi{
+        float: left;
+        width: 200px;
+        display: inline-block;
+     }
+     #desni{
+        width: 30%;
+        display: inline-block;
+     }
+     tr:nth-child(even) {background-color: #b7dcfa;} 
+     tr:nth-child(odd) {background-color: #67bbff;} 
+
+    </style>
+    <script>
+        $(document).ready(function (){
+            $("#unos").keyup(function (){
+                var value = $("#unos");
+                value = value.val().toLowerCase();
+                $("#tab tr").filter(function (){
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            $("#k td").click(function() {
+                        var tekst = $(this).text();
+                        $("#unos").val(tekst);
+                        $("#tab tr").filter(function() {
+                        $(this).toggle($(this).text().indexOf(tekst) > -1)
+                        });
+                    });
+        });
+
+
+            
+    </script>
+</head>
+<body>
+    Pretragaa: <input type="text" id="unos" >
+
+
+
+    <table border="1" border-collapse: collapse >
+        <thead>
+            <tr>
+                <th>Predmet</th>
+                <th>Tip</th>
+                <th>Nastavnik</th>
+                <th>Grupe</th>
+                <th>Dan</th>
+                <th>Termin</th>
+                <th>Ucionica</th>
+            </tr>
+        </thead>
+        <tbody id="tab">
+            {% for red in redovi %}
+                <tr>
+                    <td>{{red.split(',')[0]}}</td>
+                    <td>{{red.split(',')[1]}}</td>
+                    <td>{{red.split(',')[2]}}</td>
+                    <td>{{red.split(',')[3]}}</td>
+                    <td>{{red.split(',')[4]}}</td>
+                    <td>{{red.split(',')[5]}}</td>
+                    <td>{{red.split(',')[6]}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div id="levi">
+    <table  >
+        <thead>
+            <th>Nastavnik</th>
+            
+        </thead>
+        <tbody id="k">
+            {% for ime in sva_imena %}
+                <tr>
+                    <td>{{ime}}</td>
+                    
+                </tr>
+                
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <div id="desni">
+        <table >
+            <thead>
+                <th>
+                    Ucionice
+                </th>
+            </thead>
+            <tbody id="k">
+                {% for ucc in sve_ucionice %}
+                    <tr>
+                        <td>{{ucc}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
